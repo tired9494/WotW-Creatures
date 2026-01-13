@@ -26,6 +26,7 @@ public class MartianGruntChargeGoal extends Goal {
     private boolean canPenalize = false;
     private final MartianGrunt martianGrunt;
     private long lastChargeTick;
+    private long chargingTicks;
 
     public MartianGruntChargeGoal(MartianGrunt martianGrunt, double speedModifier) {
         this.martianGrunt = martianGrunt;
@@ -35,44 +36,7 @@ public class MartianGruntChargeGoal extends Goal {
     }
 
     public void tick() {
-        LivingEntity livingentity = this.martianGrunt.getTarget();
-        if (livingentity != null) {
-            this.martianGrunt.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
-            double d0 = this.martianGrunt.getPerceivedTargetDistanceSquareForMeleeAttack(livingentity);
-            this.ticksUntilNextPathRecalculation = Math.max(this.ticksUntilNextPathRecalculation - 1, 0);
-            if ((this.followingTargetEvenIfNotSeen || this.martianGrunt.getSensing().hasLineOfSight(livingentity)) && this.ticksUntilNextPathRecalculation <= 0 && (this.pathedTargetX == 0.0D && this.pathedTargetY == 0.0D && this.pathedTargetZ == 0.0D || livingentity.distanceToSqr(this.pathedTargetX, this.pathedTargetY, this.pathedTargetZ) >= 1.0D || this.martianGrunt.getRandom().nextFloat() < 0.05F)) {
-                this.pathedTargetX = livingentity.getX();
-                this.pathedTargetY = livingentity.getY();
-                this.pathedTargetZ = livingentity.getZ();
-                this.ticksUntilNextPathRecalculation = 4 + this.martianGrunt.getRandom().nextInt(7);
-                if (this.canPenalize) {
-                    this.ticksUntilNextPathRecalculation += failedPathFindingPenalty;
-                    if (this.martianGrunt.getNavigation().getPath() != null) {
-                        net.minecraft.world.level.pathfinder.Node finalPathPoint = this.martianGrunt.getNavigation().getPath().getEndNode();
-                        if (finalPathPoint != null && livingentity.distanceToSqr(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1)
-                            failedPathFindingPenalty = 0;
-                        else
-                            failedPathFindingPenalty += 10;
-                    } else {
-                        failedPathFindingPenalty += 10;
-                    }
-                }
-                if (d0 > 1024.0D) {
-                    this.ticksUntilNextPathRecalculation += 10;
-                } else if (d0 > 256.0D) {
-                    this.ticksUntilNextPathRecalculation += 5;
-                }
-
-                if (!this.martianGrunt.getNavigation().moveTo(livingentity, this.speedModifier)) {
-                    this.ticksUntilNextPathRecalculation += 15;
-                }
-
-                this.ticksUntilNextPathRecalculation = this.adjustedTickDelay(this.ticksUntilNextPathRecalculation);
-            }
-
-            this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
-            this.checkAndPerformAttack(livingentity, d0);
-        }
+        ++this.chargingTicks;
     }
 
     public boolean canUse() {
@@ -137,8 +101,10 @@ public class MartianGruntChargeGoal extends Goal {
     public void start() {
         this.martianGrunt.getNavigation().moveTo(this.path, this.speedModifier);
         this.martianGrunt.setAggressive(true);
-        this.ticksUntilNextPathRecalculation = 500;
         this.ticksUntilNextAttack = 0;
+        LivingEntity livingentity = this.martianGrunt.getTarget();
+        this.martianGrunt.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
+        this.martianGrunt.playChargeSound();
     }
 
     public boolean requiresUpdateEveryTick() {

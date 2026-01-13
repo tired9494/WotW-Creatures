@@ -13,6 +13,9 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> MARTIAN_GRUNT_IDLE = SOUND_EVENTS.register("martian_grunt_idle",
             () -> SoundEvent.createVariableRangeEvent(WotwCreatures.ID("martian_grunt_idle")));
 
+    public static final RegistryObject<SoundEvent> MARTIAN_GRUNT_CHARGE = SOUND_EVENTS.register("martian_grunt_charge",
+            () -> SoundEvent.createVariableRangeEvent(WotwCreatures.ID("martian_grunt_charge")));
+
     public static final RegistryObject<SoundEvent> MARTIAN_GRUNT_HURT = SOUND_EVENTS.register("martian_grunt_hurt",
             () -> SoundEvent.createVariableRangeEvent(WotwCreatures.ID("martian_grunt_hurt")));
 

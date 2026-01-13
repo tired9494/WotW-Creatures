@@ -2,7 +2,8 @@
   "martian_grunt_idle": {
     "subtitle": "sounds.wotw_creatures.martian_grunt_idle",
     "sounds": [
-      "wotw_creatures:martian_grunt_idle"
+      "wotw_creatures:martian_grunt_idle",
+      "wotw_creatures:martian_grunt_idle2"
     ]
   },
   "martian_grunt_hurt": {
@@ -15,6 +16,12 @@
     "subtitle": "sounds.wotw_creatures.martian_grunt_death",
     "sounds": [
       "wotw_creatures:martian_grunt_death"
+    ]
+  },
+  "martian_grunt_charge": {
+    "subtitle": "sounds.wotw_creatures.martian_grunt_charge",
+    "sounds": [
+      "wotw_creatures:martian_grunt_charge"
     ]
   }
 }

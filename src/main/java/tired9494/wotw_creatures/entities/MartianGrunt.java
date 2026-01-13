@@ -61,10 +61,15 @@ public class MartianGrunt extends Monster {
         return ModSounds.MARTIAN_GRUNT_DEATH.get();
     }
 
+
     protected SoundEvent getStepSound() {
         return SoundEvents.ZOMBIE_STEP;
     }
     protected void playStepSound(BlockPos pPos, BlockState pBlock) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
+    }
+
+    public void playChargeSound() {
+        this.playSound(ModSounds.MARTIAN_GRUNT_CHARGE.get(), 1.0F, 1.0F);
     }
 }
