@@ -2,5 +2,8 @@
   "entity.wotw_creatures.martian_grunt": "Martian Grunt",
   "item.wotw_creatures.martian_grunt_spawn_egg": "Martian Grunt Spawn Egg",
   "item.wotw_creatures.martian_flesh": "Martian Flesh",
-  "itemGroup.wotw_creatures": "WoTW Creatures"
+  "itemGroup.wotw_creatures": "WoTW Creatures",
+  "sounds.wotw_creatures.martian_grunt_idle": "Martian Grunt",
+  "sounds.wotw_creatures.martian_grunt_hurt": "Martian Grunt Hurt",
+  "sounds.wotw_creatures.martian_grunt_death": "Martian Grunt Dies"
 }

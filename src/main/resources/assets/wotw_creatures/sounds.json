@@ -1,0 +1,20 @@
+{
+  "martian_grunt_idle": {
+    "subtitle": "sounds.wotw_creatures.martian_grunt_idle",
+    "sounds": [
+      "wotw_creatures:martian_grunt_idle"
+    ]
+  },
+  "martian_grunt_hurt": {
+    "subtitle": "sounds.wotw_creatures.martian_grunt_hurt",
+    "sounds": [
+      "wotw_creatures:martian_grunt_hurt"
+    ]
+  },
+  "martian_grunt_death": {
+    "subtitle": "sounds.wotw_creatures.martian_grunt_death",
+    "sounds": [
+      "wotw_creatures:martian_grunt_death"
+    ]
+  }
+}
