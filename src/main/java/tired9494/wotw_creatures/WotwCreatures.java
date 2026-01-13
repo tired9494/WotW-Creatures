@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import tired9494.wotw_creatures.registry_helpers.ModCreativeTab;
 import tired9494.wotw_creatures.registry_helpers.ModEntities;
 import tired9494.wotw_creatures.registry_helpers.ModItems;
+import tired9494.wotw_creatures.registry_helpers.ModSounds;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(WotwCreatures.MODID)
@@ -53,6 +54,8 @@ public class WotwCreatures {
         ModEntities.ENTITY_TYPES.register(modEventBus);
 
         ModCreativeTab.TABS.register(modEventBus);
+
+        ModSounds.SOUND_EVENTS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
