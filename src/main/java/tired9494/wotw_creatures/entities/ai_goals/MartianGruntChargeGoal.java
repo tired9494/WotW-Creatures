@@ -58,7 +58,7 @@ public class MartianGruntChargeGoal extends MeleeAttackGoal {
             this.resetAttackCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
             this.mob.doHurtTarget(martianGrunt);
-            this.lastChargeTicks = 200;
+            this.lastChargeTicks = 0;
             this.martianGrunt.setAggressive(false);
         }
 
