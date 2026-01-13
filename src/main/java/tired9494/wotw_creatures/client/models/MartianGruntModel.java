@@ -6,7 +6,7 @@ package tired9494.wotw_creatures.client.models;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.ZombieModel;
+import net.minecraft.client.model.AbstractZombieModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -14,7 +14,7 @@ import net.minecraft.client.model.geom.builders.*;
 import tired9494.wotw_creatures.WotwCreatures;
 import tired9494.wotw_creatures.entities.MartianGrunt;
 
-public class MartianGruntModel<T extends MartianGrunt> extends ZombieModel<T> {
+public class MartianGruntModel<T extends MartianGrunt> extends AbstractZombieModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(WotwCreatures.ID("martian_grunt"), "main");
 	private final ModelPart body;
@@ -69,4 +69,8 @@ public class MartianGruntModel<T extends MartianGrunt> extends ZombieModel<T> {
 		rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
+
+    public boolean isAggressive(T entity) {
+        return entity.isAggressive();
+    }
 }
