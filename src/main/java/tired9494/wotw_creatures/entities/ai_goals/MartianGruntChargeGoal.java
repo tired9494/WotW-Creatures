@@ -9,7 +9,7 @@ import tired9494.wotw_creatures.entities.MartianGrunt;
 
 public class MartianGruntChargeGoal extends MeleeAttackGoal {
     private final MartianGrunt martianGrunt;
-    private int lastChargeTicks;
+    private long lastChargeTick;
     private Path path;
     public MartianGruntChargeGoal(MartianGrunt martianGrunt, double speedModifier) {
         super(martianGrunt, speedModifier, false);
@@ -18,7 +18,6 @@ public class MartianGruntChargeGoal extends MeleeAttackGoal {
 
     public void start() {
         super.start();
-        this.lastChargeTicks = 0;
     }
 
     public void stop() {
@@ -28,12 +27,12 @@ public class MartianGruntChargeGoal extends MeleeAttackGoal {
 
     public void tick() {
         super.tick();
-        ++this.lastChargeTicks;
+        ++this.lastChargeTick;
     }
 
     public boolean canUse() {
         long gameTime = this.mob.level().getGameTime();
-        if (gameTime - this.lastChargeTicks < 200L) {
+        if (gameTime - this.lastChargeTick < 200L) {
             return false;
         } else {
             LivingEntity livingentity = this.mob.getTarget();
@@ -58,9 +57,23 @@ public class MartianGruntChargeGoal extends MeleeAttackGoal {
             this.resetAttackCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
             this.mob.doHurtTarget(martianGrunt);
-            this.lastChargeTicks = 0;
+            this.lastChargeTick = this.mob.level().getGameTime();
             this.stop();
         }
 
+    }
+
+    public boolean canContinueToUse() {
+        LivingEntity livingentity = this.mob.getTarget();
+        long gameTime = this.mob.level().getGameTime();
+        if (gameTime - this.lastChargeTick < 200L) {
+            return false;
+        } else if (!livingentity.isAlive()) {
+            return false;
+        } else if (!this.mob.isWithinRestriction(livingentity.blockPosition())) {
+            return false;
+        } else {
+            return !(livingentity instanceof Player) || !livingentity.isSpectator() && !((Player)livingentity).isCreative();
+        }
     }
 }
