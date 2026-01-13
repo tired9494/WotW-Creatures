@@ -41,7 +41,7 @@ public class WotwCreatures {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "wotw_creatures";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public WotwCreatures() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

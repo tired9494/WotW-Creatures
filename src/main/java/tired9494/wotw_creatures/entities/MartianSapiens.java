@@ -43,7 +43,7 @@ public class MartianSapiens extends Monster {
     }
 
     protected void addBehaviourGoals() {
-        this.goalSelector.addGoal(3, new MartianSapiensChargeGoal(this, 2.0));
+        this.goalSelector.addGoal(2, new MartianSapiensChargeGoal(this, 2.0));
         this.goalSelector.addGoal(3, new MartianSapiensAttackGoal(this, 1.0D));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(MartianSapiens.class));

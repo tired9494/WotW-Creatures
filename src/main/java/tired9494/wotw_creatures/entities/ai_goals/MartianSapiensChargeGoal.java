@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.pathfinder.Path;
+import tired9494.wotw_creatures.WotwCreatures;
 import tired9494.wotw_creatures.entities.MartianSapiens;
 
 import java.util.EnumSet;
@@ -15,10 +16,10 @@ import java.util.UUID;
 
 public class MartianSapiensChargeGoal extends Goal {
     private static final UUID SPEED_MODIFIER_WINDUP_UUID = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A276D836");
-    private static final AttributeModifier SPEED_MODIFIER_WINDUP = new AttributeModifier(SPEED_MODIFIER_WINDUP_UUID, "Charge attack windup speed freeze", 0.0D, AttributeModifier.Operation.MULTIPLY_BASE);
+    private static final AttributeModifier SPEED_MODIFIER_WINDUP = new AttributeModifier(SPEED_MODIFIER_WINDUP_UUID, "Charge attack windup speed freeze", 0.0D, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
     private static final UUID SPEED_MODIFIER_CHARGE_UUID = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A276D836");
-    private static final AttributeModifier SPEED_MODIFIER_CHARGE = new AttributeModifier(SPEED_MODIFIER_CHARGE_UUID, "Charge attack speed boost", 0.5D, AttributeModifier.Operation.MULTIPLY_BASE);
+    private static final AttributeModifier SPEED_MODIFIER_CHARGE = new AttributeModifier(SPEED_MODIFIER_CHARGE_UUID, "Charge attack speed boost", 1.5D, AttributeModifier.Operation.MULTIPLY_BASE);
 
     private final double speedModifier;
     private Path path;
@@ -35,17 +36,21 @@ public class MartianSapiensChargeGoal extends Goal {
 
     public void tick() {
         this.chargingTicks++;
+        WotwCreatures.LOGGER.debug("Ticking MartianSapiensCharge Goal {}",  this.chargingTicks);
         if (this.chargingTicks >= 80) {
+            WotwCreatures.LOGGER.debug("Stopping charge at {} ticks",  this.chargingTicks);
             this.stop();
         }
-        if (this.chargingTicks >= 40) {
-            this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(this.SPEED_MODIFIER_CHARGE);
+        else if (this.chargingTicks >= 40) {
+            WotwCreatures.LOGGER.debug("Finished windup at {} ticks",  this.chargingTicks);
+            this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_WINDUP);
+            this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(SPEED_MODIFIER_CHARGE);
         }
     }
 
     public boolean canUse() {
         long gameTime = this.martianSapiens.level().getGameTime();
-        if (gameTime - this.lastChargeTick < 200L) {
+        if (gameTime - this.lastChargeTick < 500L) {
             return false;
         } else {
             LivingEntity livingentity = this.martianSapiens.getTarget();
@@ -64,24 +69,9 @@ public class MartianSapiensChargeGoal extends Goal {
         }
     }
 
-    protected void checkAndPerformAttack(LivingEntity martianGrunt, double distance) {
-        double d0 = this.getAttackReachSqr(martianGrunt);
-        if (distance <= d0) {
-            this.resetAttackCooldown();
-            this.martianSapiens.swing(InteractionHand.MAIN_HAND);
-            this.martianSapiens.doHurtTarget(martianGrunt);
-            this.lastChargeTick = this.martianSapiens.level().getGameTime();
-            this.stop();
-        }
-
-    }
-
     public boolean canContinueToUse() {
         LivingEntity livingentity = this.martianSapiens.getTarget();
-        long gameTime = this.martianSapiens.level().getGameTime();
         if (livingentity == null) {
-            return false;
-        } else if (gameTime - this.lastChargeTick < 200L) {
             return false;
         } else if (!livingentity.isAlive()) {
             return false;
