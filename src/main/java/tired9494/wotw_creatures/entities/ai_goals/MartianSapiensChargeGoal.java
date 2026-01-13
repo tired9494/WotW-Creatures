@@ -3,6 +3,7 @@ package tired9494.wotw_creatures.entities.ai_goals;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
@@ -10,21 +11,18 @@ import net.minecraft.world.level.pathfinder.Path;
 import tired9494.wotw_creatures.entities.MartianSapiens;
 
 import java.util.EnumSet;
+import java.util.UUID;
 
 public class MartianSapiensChargeGoal extends Goal {
+    private static final UUID SPEED_MODIFIER_WINDUP_UUID = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A276D836");
+    private static final AttributeModifier SPEED_MODIFIER_WINDUP = new AttributeModifier(SPEED_MODIFIER_WINDUP_UUID, "Charge attack windup speed freeze", 0.0D, AttributeModifier.Operation.MULTIPLY_BASE);
+
+    private static final UUID SPEED_MODIFIER_CHARGE_UUID = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A276D836");
+    private static final AttributeModifier SPEED_MODIFIER_CHARGE = new AttributeModifier(SPEED_MODIFIER_CHARGE_UUID, "Charge attack speed boost", 0.5D, AttributeModifier.Operation.MULTIPLY_BASE);
+
     private final double speedModifier;
-    private final boolean followingTargetEvenIfNotSeen;
     private Path path;
-    private double pathedTargetX;
-    private double pathedTargetY;
-    private double pathedTargetZ;
-    private int ticksUntilNextPathRecalculation;
     private int ticksUntilNextAttack;
-    private final int attackInterval = 20;
-    private long lastCanUseCheck;
-    private static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
-    private int failedPathFindingPenalty = 0;
-    private boolean canPenalize = false;
     private final MartianSapiens martianSapiens;
     private long lastChargeTick;
     private long chargingTicks;
@@ -32,7 +30,6 @@ public class MartianSapiensChargeGoal extends Goal {
     public MartianSapiensChargeGoal(MartianSapiens martianSapiens, double speedModifier) {
         this.martianSapiens = martianSapiens;
         this.speedModifier = speedModifier;
-        this.followingTargetEvenIfNotSeen = true;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -42,7 +39,7 @@ public class MartianSapiensChargeGoal extends Goal {
             this.stop();
         }
         if (this.chargingTicks >= 40) {
-            this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.speedModifier);
+            this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(this.SPEED_MODIFIER_CHARGE);
         }
     }
 
@@ -103,7 +100,8 @@ public class MartianSapiensChargeGoal extends Goal {
 
         this.martianSapiens.setSprinting(false);
         this.chargingTicks = 0;
-        this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.23F);
+        this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_WINDUP);
+        this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_CHARGE);
         this.martianSapiens.setAggressive(false);
         this.martianSapiens.getNavigation().stop();
     }
@@ -112,11 +110,12 @@ public class MartianSapiensChargeGoal extends Goal {
         this.martianSapiens.getNavigation().moveTo(this.path, this.speedModifier);
         this.martianSapiens.setAggressive(true);
         this.ticksUntilNextAttack = 0;
-        this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0F);
+        this.martianSapiens.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(SPEED_MODIFIER_WINDUP);
         this.martianSapiens.setSprinting(true);
         LivingEntity livingentity = this.martianSapiens.getTarget();
         this.martianSapiens.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
         this.martianSapiens.playChargeSound();
+        this.lastChargeTick = this.martianSapiens.level().getGameTime();
     }
 
     public boolean requiresUpdateEveryTick() {
