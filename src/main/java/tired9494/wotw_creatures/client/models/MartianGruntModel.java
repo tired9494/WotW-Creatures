@@ -63,6 +63,7 @@ public class MartianGruntModel<T extends MartianGrunt> extends ZombieModel<T> {
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        hat.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		leftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
