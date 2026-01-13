@@ -6,19 +6,19 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import tired9494.wotw_creatures.WotwCreatures;
-import tired9494.wotw_creatures.client.models.MartianGruntModel;
-import tired9494.wotw_creatures.client.renderers.MartianGruntRenderer;
+import tired9494.wotw_creatures.client.models.MartianSapiensModel;
+import tired9494.wotw_creatures.client.renderers.MartianSapiensRenderer;
 import tired9494.wotw_creatures.registry_helpers.ModEntities;
 
 @Mod.EventBusSubscriber(modid = WotwCreatures.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer((EntityType)ModEntities.MARTIAN_GRUNT.get(), MartianGruntRenderer::new);
+        event.registerEntityRenderer((EntityType)ModEntities.MARTIAN_SAPIENS.get(), MartianSapiensRenderer::new);
     }
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(MartianGruntModel.LAYER_LOCATION, MartianGruntModel::createBodyLayer);
+        event.registerLayerDefinition(MartianSapiensModel.LAYER_LOCATION, MartianSapiensModel::createBodyLayer);
     }
 }

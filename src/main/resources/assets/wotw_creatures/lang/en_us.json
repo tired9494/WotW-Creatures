@@ -1,10 +1,10 @@
 {
-  "entity.wotw_creatures.martian_grunt": "Martian Grunt",
-  "item.wotw_creatures.martian_grunt_spawn_egg": "Martian Grunt Spawn Egg",
+  "entity.wotw_creatures.martian_sapiens": "Martian Sapiens",
+  "item.wotw_creatures.martian_sapiens_spawn_egg": "Martian Sapiens Spawn Egg",
   "item.wotw_creatures.martian_flesh": "Martian Flesh",
   "itemGroup.wotw_creatures": "WoTW Creatures",
-  "sounds.wotw_creatures.martian_grunt_idle": "Martian Grunt groans",
-  "sounds.wotw_creatures.martian_grunt_hurt": "Martian Grunt hurts",
-  "sounds.wotw_creatures.martian_grunt_death": "Martian Grunt dies",
-  "sounds.wotw_creatures.martian_grunt_charge": "Martian Grunt charges"
+  "sounds.wotw_creatures.martian_sapiens_idle": "Martian Sapiens groans",
+  "sounds.wotw_creatures.martian_sapiens_hurt": "Martian Sapiens hurts",
+  "sounds.wotw_creatures.martian_sapiens_death": "Martian Sapiens dies",
+  "sounds.wotw_creatures.martian_sapiens_charge": "Martian Sapiens charges"
 }

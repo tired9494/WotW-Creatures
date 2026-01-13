@@ -21,7 +21,7 @@ public class ModCreativeTab {
     public static final RegistryObject<CreativeModeTab> WOTW_TAB = TABS.register("wotw_creatures_tab",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.wotw_creatures"))
-                    .icon(() -> ModItems.MARTIAN_GRUNT_SPAWN_EGG.get().getDefaultInstance())
+                    .icon(() -> ModItems.MARTIAN_FLESH.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         TAB_ITEMS.forEach(item -> output.accept(item.get()));
                     })

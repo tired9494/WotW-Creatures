@@ -1,27 +1,27 @@
 {
-  "martian_grunt_idle": {
-    "subtitle": "sounds.wotw_creatures.martian_grunt_idle",
+  "martian_sapiens_idle": {
+    "subtitle": "sounds.wotw_creatures.martian_sapiens_idle",
     "sounds": [
-      "wotw_creatures:martian_grunt_idle",
-      "wotw_creatures:martian_grunt_idle2"
+      "wotw_creatures:martian_sapiens_idle",
+      "wotw_creatures:martian_sapiens_idle2"
     ]
   },
-  "martian_grunt_hurt": {
-    "subtitle": "sounds.wotw_creatures.martian_grunt_hurt",
+  "martian_sapiens_hurt": {
+    "subtitle": "sounds.wotw_creatures.martian_sapiens_hurt",
     "sounds": [
-      "wotw_creatures:martian_grunt_hurt"
+      "wotw_creatures:martian_sapiens_hurt"
     ]
   },
-  "martian_grunt_death": {
-    "subtitle": "sounds.wotw_creatures.martian_grunt_death",
+  "martian_sapiens_death": {
+    "subtitle": "sounds.wotw_creatures.martian_sapiens_death",
     "sounds": [
-      "wotw_creatures:martian_grunt_death"
+      "wotw_creatures:martian_sapiens_death"
     ]
   },
-  "martian_grunt_charge": {
-    "subtitle": "sounds.wotw_creatures.martian_grunt_charge",
+  "martian_sapiens_charge": {
+    "subtitle": "sounds.wotw_creatures.martian_sapiens_charge",
     "sounds": [
-      "wotw_creatures:martian_grunt_charge"
+      "wotw_creatures:martian_sapiens_charge"
     ]
   }
 }
