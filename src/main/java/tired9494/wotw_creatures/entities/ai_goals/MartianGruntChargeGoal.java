@@ -111,7 +111,9 @@ public class MartianGruntChargeGoal extends Goal {
     public boolean canContinueToUse() {
         LivingEntity livingentity = this.martianGrunt.getTarget();
         long gameTime = this.martianGrunt.level().getGameTime();
-        if (gameTime - this.lastChargeTick < 200L) {
+        if (livingentity == null) {
+            return false;
+        } else if (gameTime - this.lastChargeTick < 200L) {
             return false;
         } else if (!livingentity.isAlive()) {
             return false;
