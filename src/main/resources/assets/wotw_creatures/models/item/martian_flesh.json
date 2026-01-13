@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "wotw_creatures:item/martian_flesh"
+  }
+}
